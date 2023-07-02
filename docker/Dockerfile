@@ -1,4 +1,5 @@
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-devel
+
 LABEL authors="Y-Yano"
 
 # Install python3 pip3
@@ -13,30 +14,18 @@ RUN apt-get update && \
         wget \
         curl \
         git \
-        vim \
-	ipdb \
+        vim 
 
 
 
 # python libraries
-RUN pip install notebook \\
-		matplotlib\\
-		numpy\\
-		scipy\\
- 		torch\\ 
-		torchvision\\ 
-		torchaudio\\	
-		gym\\ 
-		tensorboard\\
+RUN pip install notebook \
+		matplotlib \
+		numpy \
+		scipy \
+ 		gym \ 
+		tensorboard \
+		ipdb
 
-ARG uname
-ARG password
-ARG uid
-ARG gid
-RUN groupadd -g $gid $uname
-RUN useradd -s /bin/bash -u $uid -g $gid -m $uname && echo "$uname:$password" | chpasswd && adduser $uname sudo
-RUN apt-get update -qq && apt-get -y install sudo && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/$uname
-USER $uname
-
+RUN mkdir 1 2 3
