@@ -3,11 +3,13 @@ The repository for M1 tutorial. The administers are YANO and NAKAMURA
 
 
 # Quick start
-cd "このディレクトリが置いてあるフォルダ"
-
-
+任意の場所にて
 ```
+git clone https://github.com/yanoyoshiki/torch_tutorial_Y-I.git
+
+cd torch_tutorial_Y-I
 cd docker
+
 bash build.sh
 bash run.sh
 ```
