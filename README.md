@@ -13,7 +13,9 @@ bash run.sh
 ```
 
 以降は
+```
 docker exec -it torch_tutorial_y-i　bash
+```
 でコンテナに接続できる
 
 抜ける時は
