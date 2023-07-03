@@ -4,9 +4,12 @@ The repository for M1 tutorial. The administers are YANO and NAKAMURA
 
 # Quick start
 cd "このディレクトリが置いてあるフォルダ"
+
+"""
 cd docker
 bash build.sh
 bash run.sh
+"""
 
 以降は
 docker exec -it torch_tutorial_y-i　bash
