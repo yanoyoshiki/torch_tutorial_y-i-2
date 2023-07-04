@@ -12,6 +12,6 @@ docker run \
  -p 63322:63322 \
  -p 6006:6006 \
  -p 6007:6007 \
- -it --name "torch_tutorial_y-i" torch_tutorial_y-i \
+ -it --name "torch_tutorial_y-i-2" torch_tutorial_y-i-2 \
 
 
