@@ -1,7 +1,5 @@
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-devel
 
-LABEL authors="Y-Yano"
-
 # Install python3 pip3
 RUN apt -y update && apt -y upgrade
 RUN apt-get -y install python3
@@ -28,4 +26,4 @@ RUN pip install notebook \
 		ipdb
 
 
-RUN mkdir 1 2 3
+RUN mkdir src
