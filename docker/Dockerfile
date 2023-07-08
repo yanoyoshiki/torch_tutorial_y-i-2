@@ -24,6 +24,8 @@ RUN pip install notebook \
  		gym \ 
 		tensorboard \
 		optuna \
+		ipywidgets \
+		pytorch_lightning \
 		ipdb
 
 
