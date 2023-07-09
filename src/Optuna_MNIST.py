@@ -1,3 +1,4 @@
+import datetime
 from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision import transforms
@@ -140,6 +141,7 @@ def objective(trial):
   return error_rate
 
 TRIAL_SIZE = 50
-tensorboard_callback = TensorBoardCallback("logs/MNIST/", metric_name="error_rate")
+tensorboard_callback = TensorBoardCallback(f"logs/MNIST/{datetime.datetime.now()}/", metric_name="error_rate")
 study = optuna.create_study()
 study.optimize(objective, n_trials=TRIAL_SIZE, callbacks=[tensorboard_callback])
+ipdb.set_trace()

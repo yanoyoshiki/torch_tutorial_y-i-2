@@ -1,4 +1,5 @@
 # NumPy、Matplotlib、PyTorchをインポートする
+import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
@@ -122,7 +123,7 @@ def get_activation(trial):
     return activation
 
 def objective(trial):
-  EPOCH = 50
+  EPOCH = 10
   device = "cuda" if torch.cuda.is_available() else "cpu"
 
   #畳み込み層の数
@@ -147,6 +148,7 @@ def objective(trial):
 
 
 TRIAL_SIZE = 10
-tensorboard_callback = TensorBoardCallback("logs/CIFAR10/", metric_name="error_rate")
+tensorboard_callback = TensorBoardCallback(f"logs/CIFAR10/{datetime.datetime.now()}/", metric_name="error_rate")
 study = optuna.create_study()
 study.optimize(objective, n_trials=TRIAL_SIZE, callbacks=[tensorboard_callback])
+ipdb.set_trace()
