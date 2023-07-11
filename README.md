@@ -6,7 +6,7 @@ The administers are YANO and NAKAMURA.
 このリポジトリは「課題2: ハイパーパラメータチューニングに慣れる」に関するリポジトリです.
 
 # 課題
-以下の1.-8.を実施する．
+今回の課題では1.-8.の指示があった．
 
 1. CIFAR-10とMNISTを落としてくる
 2. Tensorboardをつかうので，知らない人は調べる
@@ -18,8 +18,15 @@ The administers are YANO and NAKAMURA.
 7. どのように最適なパラメータを探すかについて調査
 8. (できる人だけ) Optunaなどのハイパーパラメータチューニングライブラリによる自動化
 
+しかし今回はOptunaに慣れておきたかったため、Optunaベースで上記課題を達成した．
+具体的には
+1. CIFAR-10とMNISTを落としてくる
+2. Optunaの使用を前提にそれぞれのCNNを組む
+3. 両データセットにおいて学習及びハイパラメータの最適化を行う．
+4. Tensorboardにてネットワークに関するハイパラメータがどのように結果に寄与するのか分析を行う
+5. 任意パラメータの入力により最適パラメータと最適ではない任意のパラメータを入力することで精度の比較を行う
 
-# Quick Start
+# Set up
 ## SSH接続(SSH接続でリモートPCへ接続する場合のみlocal terminalにて実行が必要)
 ```
  ssh -L 63322:localhost:63322 -L 6006:localhost:6006 -L 6007:localhost:6007  <username>@<remotePC IP>
@@ -47,10 +54,9 @@ docker exec -it torch_tutorial_y-i　bash
 ```
 一時的に抜ける時は 「controll + P + Q」
 
-## Jupiter notebookを開く時
+### Jupiter notebookを開く時
 ```
 jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
-
 
 
