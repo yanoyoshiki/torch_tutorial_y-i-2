@@ -3,6 +3,7 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision import transforms
 import numpy as np
+import ipdb
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -10,6 +11,23 @@ import torch.optim as optim
 from optuna.integration.tensorboard import TensorBoardCallback
 import optuna
 optuna.logging.disable_default_handler()
+
+
+#set seeds
+def torch_fix_seed(seed=42):
+    # Python random
+    random.seed(seed)
+    # Numpy
+    np.random.seed(seed)
+    # Pytorch
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.use_deterministic_algorithms = True
+
+
+torch_fix_seed()
+
 
 BATCHSIZE = 128
 
@@ -140,8 +158,27 @@ def objective(trial):
   print(f'{trial.number + 1} trial fin')
   return error_rate
 
+
+# retrain using hyperparameter derection on terminal
+def directsetting_hyperparameter(trial, num_layer, mid_units, num_filters):
+  model = Net(trial, num_layer, mid_units, num_filters).to(device = "cuda" if torch.cuda.is_available() else "cpu")
+  optimizer = get_optimizer(trial, model)
+
+  for step in range(EPOCH):
+    train(model, device, train_loader, optimizer)
+    error_rate = test(model, device, test_loader)
+    print(f'{step}fin | error rate {error_rate}')
+
+  print(f'{trial.number + 1} trial fin')
+  return error_rate
+
 TRIAL_SIZE = 50
 tensorboard_callback = TensorBoardCallback(f"logs/MNIST/{datetime.datetime.now()}/", metric_name="error_rate")
 study = optuna.create_study()
 study.optimize(objective, n_trials=TRIAL_SIZE, callbacks=[tensorboard_callback])
-ipdb.set_trace()
+# ipdb.set_trace()
+
+print(study.best_params)
+print(study.best_value)
+
+

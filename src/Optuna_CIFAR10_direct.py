@@ -55,9 +55,9 @@ classes = ('plane', 'car', 'bird', 'cat',
 
 
 class Net(nn.Module):
-  def __init__(self, trial, num_layer, mid_units, num_filters):
+  def __init__(self, trial, num_layer, mid_units, num_filters,activation):
     super(Net, self).__init__()
-    self.activation = get_activation(trial)
+    self.activation = activation
     #第1層
     self.convs = nn.ModuleList([nn.Conv2d(in_channels=3, out_channels=num_filters[0], kernel_size=5)])
     self.out_height = in_height - kernel +1
@@ -176,3 +176,62 @@ best_params_result = study.best_params
 #output
 #{'num_layer': 4, 'mid_units': 140.0, 'num_filter_0': 128.0, 'num_filter_1': 112.0, 'num_filter_2': 112.0, 'num_filter_3': 112.0, 'activation': 'ReLU', 'optimizer': 'MomentumSGD', 'weight_decay': 5.2182135446336915e-08, 'momentum_sgd_lr': 0.0004955865902351846}
 #0.2519
+
+#-----------------------------------------------------------------------------------------------------
+
+
+torch_fix_seed()
+def directset_get_optimizer(trial, model,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr):
+
+  if optimizer_name == optimizer_names[0]:
+    optimizer = optim.Adam(model.parameters(), lr=adam_lr, weight_decay=weight_decay)
+  elif optimizer_name == optimizer_names[1]:
+    optimizer = optim.SGD(model.parameters(), lr=momentum_sgd_lr, momentum=0.9, weight_decay=weight_decay)
+  else:
+    optimizer = optim.RMSprop(model.parameters())
+
+  return optimizer
+
+def directset_get_activation(trial,activation_name):
+
+    if activation_name == "ReLU":
+        activation = F.relu
+    else:
+        activation = F.elu
+
+    return activation
+# retrain using hyperparameter derection on terminal
+def directset_hyperparameter(trial, num_layer, mid_units, num_filters,activation_name):
+    activation = directset_get_activation(trial,activation_name)
+    model = Net(trial, num_layer, mid_units, num_filters,activation).to(device = "cuda" if torch.cuda.is_available() else "cpu")
+    optimizer = directset_get_optimizer(trial, model,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr)
+
+    for step in range(EPOCH):
+    train(model, device, train_loader, optimizer)
+    error_rate = test(model, device, test_loader)
+    print(f'{step}fin | error rate {error_rate}')
+
+    print(f'{trial.number + 1} trial fin')
+    return error_rate
+
+
+
+
+
+#set the hyparameter 
+# add argparse arguments
+import argparse
+parser = argparse.ArgumentParser("Welcome to CIFAR10 code")
+parser.add_argument("--num_layer", type=int, default=None, help="Seed used for the environment")
+parser.add_argument("mid_units", type=int, default=None, help="Seed used for the environment")
+parser.add_argument("num_filter", type=int, default=None, help="Seed used for the environment")
+parser.add_argument("--seed", type=int, default=None, help="Seed used for the environment")
+args_cli = parser.parse_args()
+
+#seed
+#seed =  args_cli.seed
+
+#Indeed, we need to decide the number of num_filter, but the case is based on oputuna firstly. Then you just input each num_layer parameter.
+print(study.best_params)
+study = optuna.create_study()
+study.optimize(objective, n_trials=TRIAL_SIZE, callbacks=[tensorboard_callback])
