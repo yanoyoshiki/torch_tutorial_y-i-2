@@ -50,6 +50,7 @@ classes = tuple(np.linspace(0, 9, 10, dtype=np.uint8))
 in_height = 28
 in_width = 28
 kernel = 3
+
 class Net(nn.Module):
   def __init__(self, trial, num_layer, mid_units, num_filters):
     super(Net, self).__init__()
@@ -182,3 +183,4 @@ print(study.best_params)
 print(study.best_value)
 
 
+# {'num_layer': 6, 'mid_units': 400.0, 'num_filter_0': 128.0, 'num_filter_1': 112.0, 'num_filter_2': 128.0, 'num_filter_3': 32.0, 'num_filter_4': 64.0, 'num_filter_5': 16.0, 'activation': 'ELU', 'optimizer': 'MomentumSGD', 'weight_decay': 3.705858691297322e-09, 'momentum_sgd_lr': 0.014335285805707738}

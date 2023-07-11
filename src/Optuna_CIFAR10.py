@@ -3,6 +3,7 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 import ipdb
+import random
 import torch
 import torchvision
 import torchvision.transforms as transforms
@@ -166,7 +167,6 @@ TRIAL_SIZE = 50
 tensorboard_callback = TensorBoardCallback(f"logs/CIFAR10/{datetime.datetime.now()}/", metric_name="error_rate")
 study = optuna.create_study()
 study.optimize(objective, n_trials=TRIAL_SIZE, callbacks=[tensorboard_callback])
-# ipdb.set_trace()
 
 print(study.best_params)
 print(study.best_value)
