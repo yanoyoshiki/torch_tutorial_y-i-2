@@ -18,6 +18,7 @@ The administers are YANO and NAKAMURA.
 7. どのように最適なパラメータを探すかについて調査
 8. (できる人だけ) Optunaなどのハイパーパラメータチューニングライブラリによる自動化
 
+
 しかし今回はOptunaに慣れておきたかったため、Optunaベースで上記課題を達成した．
 具体的には
 1. CIFAR-10とMNISTを落としてくる
