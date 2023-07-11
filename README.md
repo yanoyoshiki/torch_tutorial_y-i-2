@@ -35,7 +35,7 @@ The administers are YANO and NAKAMURA.
 接続完了後， 環境構築へ
 ## nativeの場合
 環境構築へ
-## 環境設定
+## 環境構築
 ### 初回
 任意のディレクトリにて， githubからリポジトリのクローンを作成する．
 ```
