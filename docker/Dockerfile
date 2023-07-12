@@ -26,6 +26,7 @@ RUN pip install notebook \
 		optuna \
 		ipywidgets \
 		pytorch_lightning \
+		tensorflow \
 		ipdb
 
 
