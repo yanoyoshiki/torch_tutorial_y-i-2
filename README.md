@@ -39,16 +39,19 @@ cd torch_tutorial_y-i-3/docker
 
 bash build.sh
 bash run.sh
+cd
 ```
 ### 2回目以降
 以下のコマンドで，dockerのコンテナへの接続を行う．
 ```
 docker exec -it torch_tutorial_y-i　bash
+cd
 ```
 一時的に抜ける時は 「controll + P + Q」
 
 ## Jupiter notebookを開く時
 ```
+cd
 jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
 
