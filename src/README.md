@@ -20,11 +20,13 @@ NNの学習状態の検証においてある特定のハイパラメータを任
 
 MNIST
 ```
+cd /root/src
 python Optuna_MNIST_direct.py --patch_size 128 --EPOCH 10 --num_layer 6 --mid_units 400 --num_filter 128 112 128 32 64 16 --activation "ELU" --optimizer "MomentumSGD" --weight_decay 3.705858691297322e-09 --adam_lr 0.00021312 --momentum_sgd_lr 0.014335285805707738 --seed 42
 ```
 
 CIFAR10
 ```
+cd /root/src
 python Optuna_CIFAR10_direct.py --patch_size 4 --EPOCH 10 --num_layer 4 --mid_units 140 --num_filter 128 112 112 112 --activation_name "ReLU" --optimizer_name "MomentumSGD" --weight_decay 5.2182135446336915e-08 --adam_lr 0.00021312 --momentum_sgd_lr 0.0004955865902351846 --seed 42
 ```
 
