@@ -11,6 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from optuna.integration.tensorboard import TensorBoardCallback
+from torch.utils.tensorboard import SummaryWriter
 import optuna
 optuna.logging.disable_default_handler()
 
@@ -41,8 +42,6 @@ def torch_fix_seed(seed=args_cli.seed):
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.use_deterministic_algorithms = True
-
-
 torch_fix_seed()
 
 BATCHSIZE = args_cli.patch_size
@@ -103,27 +102,30 @@ class Net(nn.Module):
 
 def train(model, device, train_loader, optimizer):
   model.train()
+  loss_corect = 0
   for batch_idx, (data, target) in enumerate(train_loader):
-        data, target = data.to(device), target.to(device)
-        optimizer.zero_grad()
-        output = model(data)
-        loss = F.nll_loss(output, target)
-        loss.backward()
-        optimizer.step()
+    data, target = data.to(device), target.to(device)
+    optimizer.zero_grad()
+    output = model(data)
+    loss = F.nll_loss(output, target)
+    loss.backward()
+    optimizer.step()
+    loss_corect+=loss
+  return loss_corect / len(train_loader)
 
 def test(model, device, test_loader):
-    model.eval()
-    correct = 0
-    total = 0
-    with torch.no_grad():
-        for data in test_loader:
-            inputs, labels = data[0].to(device), data[1].to(device)
-            outputs = model(inputs)
-            _, predicted = torch.max(outputs.data, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
+  model.eval()
+  correct = 0
+  total = 0
+  with torch.no_grad():
+    for data in test_loader:
+      inputs, labels = data[0].to(device), data[1].to(device)
+      outputs = model(inputs)
+      _, predicted = torch.max(outputs.data, 1)
+      total += labels.size(0)
+      correct += (predicted == labels).sum().item()
 
-    return 1 - correct / len(test_loader.dataset)
+  return 1 - correct / len(test_loader.dataset)
 
 
 torch_fix_seed()
@@ -139,26 +141,28 @@ def directset_get_optimizer(model,optimizer_name,weight_decay,adam_lr,momentum_s
   return optimizer
 
 def directset_get_activation(activation_name):
+  if activation_name == "ReLU":
+      activation = F.relu
+  else:
+      activation = F.elu
 
-    if activation_name == "ReLU":
-        activation = F.relu
-    else:
-        activation = F.elu
-
-    return activation
+  return activation
 
 # retrain using hyperparameter derection on terminal
 def directset_hyperparameter(num_layer, mid_units, num_filters,activation_name,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr,EPOCH):
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    
-    activation = directset_get_activation(activation_name)
-    model = Net(num_layer, mid_units, num_filters,activation).to(device)
-    optimizer = directset_get_optimizer(model,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr)
+  device = "cuda" if torch.cuda.is_available() else "cpu"
+  writer = SummaryWriter(log_dir=f"logs/MNIST/{datetime.datetime.now()}/learning/")
 
-    for step in range(EPOCH):
-      train(model, device, train_loader, optimizer)
-      error_rate = test(model, device, test_loader)
-      print(f'{step}fin | error rate {error_rate}')
+  activation = directset_get_activation(activation_name)
+  model = Net(num_layer, mid_units, num_filters,activation).to(device)
+  optimizer = directset_get_optimizer(model,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr)
+
+  for step in range(EPOCH):
+    loss=train(model, device, train_loader, optimizer)
+    error_rate = test(model, device, test_loader)
+    writer.add_scalar("loss", loss, step)  
+    writer.add_scalar("accuracy", error_rate, step)  
+    print(f'{step}fin | error rate {error_rate}')
 
 #Execution training
 directset_hyperparameter(args_cli.num_layer,

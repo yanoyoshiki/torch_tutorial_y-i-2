@@ -11,6 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from optuna.integration.tensorboard import TensorBoardCallback
+from torch.utils.tensorboard import SummaryWriter
 
 import optuna
 optuna.logging.disable_default_handler()
@@ -105,13 +106,16 @@ class Net(nn.Module):
 
 def train(model, device, train_loader, optimizer):
   model.train()
+  loss_corect = 0
   for batch_idx, (data, target) in enumerate(train_loader):
-        data, target = data.to(device), target.to(device)
-        optimizer.zero_grad()
-        output = model(data)
-        loss = F.nll_loss(output, target)
-        loss.backward()
-        optimizer.step()
+    data, target = data.to(device), target.to(device)
+    optimizer.zero_grad()
+    output = model(data)
+    loss = F.nll_loss(output, target)
+    loss.backward()
+    optimizer.step()
+    loss_corect+=loss
+  return loss_corect / len(train_loader)
 
 def test(model, device, test_loader):
     model.eval()
@@ -151,14 +155,17 @@ def directset_get_activation(activation_name):
 # retrain using hyperparameter derection on terminal
 def directset_hyperparameter(num_layer, mid_units, num_filters,activation_name,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr,EPOCH):
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    writer = SummaryWriter(log_dir=f"logs/SIFAR10/{datetime.datetime.now()}/learning/")
     
     activation = directset_get_activation(activation_name)
     model = Net(num_layer, mid_units, num_filters,activation).to(device)
     optimizer = directset_get_optimizer(model,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr)
 
     for step in range(EPOCH):
-      train(model, device, train_loader, optimizer)
+      loss=train(model, device, train_loader, optimizer)
       error_rate = test(model, device, test_loader)
+      writer.add_scalar("loss", loss, step)  
+      writer.add_scalar("accuracy", error_rate, step)  
       print(f'{step}fin | error rate {error_rate}')
 
       # return error_rate
