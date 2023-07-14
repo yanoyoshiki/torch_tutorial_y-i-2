@@ -21,7 +21,7 @@ The administers are YANO and NAKAMURA.
 
 
 しかし今回はOptunaに慣れておきたかったため、Optunaベースで上記課題を達成した．
-具体的には
+以下の流れで課題を進めた. 
 1. CIFAR-10とMNISTを落としてくる
 2. Optunaの使用を前提にそれぞれのCNNを組む
 3. 両データセットにおいて学習及びハイパラメータの最適化を行う．
