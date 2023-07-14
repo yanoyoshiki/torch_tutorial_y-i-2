@@ -3,7 +3,6 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision import transforms
 import numpy as np
-import ipdb
 import argparse
 import random
 import torch
