@@ -165,7 +165,7 @@ def directset_hyperparameter(num_layer, mid_units, num_filters,activation_name,o
       loss=train(model, device, train_loader, optimizer)
       error_rate = test(model, device, test_loader)
       writer.add_scalar("loss", loss, step)  
-      writer.add_scalar("accuracy", error_rate, step)  
+      writer.add_scalar("error rate", error_rate, step)  
       print(f'{step}fin | error rate {error_rate}')
 
       # return error_rate
