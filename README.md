@@ -57,3 +57,5 @@ cd
 cd
 jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
+
+Jupyter notebookが開くことを確認出来次第, 本リポジトリ内の src/REAME.md に書いてある手順に従う. 
