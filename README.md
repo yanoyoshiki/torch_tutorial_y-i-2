@@ -41,7 +41,7 @@ The administers are YANO and NAKAMURA.
 ### 初回
 任意のディレクトリにて， githubからリポジトリのクローンを作成する．
 ```
-git clone https://github.com/Issa-N/torch_tutorial_y-i-2.git
+git clone https://github.com/yanoyoshiki/torch_tutorial_y-i-2.git
 ```
 次に，Dockerで仮想環境を作る．
 ```
