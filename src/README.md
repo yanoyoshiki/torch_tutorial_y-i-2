@@ -34,7 +34,7 @@ python Optuna_CIFAR10_direct.py --patch_size 4 --EPOCH 10 --num_layer 4 --mid_un
 
 ```
 tensorboard --logdir /root/src/logs/MNIST/<実行した時刻>/learning --host 0.0.0.0 --port 6006
-tensorboard --logdir /root/src/logs/MNIST/<実行した時刻>/learning --host 0.0.0.0 --port 6006
+tensorboard --logdir /root/src/logs/CIFAR10/<実行した時刻>/learning --host 0.0.0.0 --port 6006
 ```
 ## 結果
 結果として最適パラメータでの学習結果と任意の非最適なハイパーパラメータでの学習結果を以下に示す. 
