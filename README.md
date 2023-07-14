@@ -60,4 +60,5 @@ docker exec -it torch_tutorial_y-i　bash
 jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
 
+## 環境構築終了後は　src内のreadme 参照
 
