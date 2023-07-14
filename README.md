@@ -6,7 +6,7 @@ The administers are YANO and NAKAMURA.
 このリポジトリは「課題2: ハイパーパラメータチューニングに慣れる」に関するリポジトリです.
 
 # 課題
-以下の1.-8.を実施する．
+今回の課題では1.-8.の指示があった．
 
 1. CIFAR-10とMNISTを落としてくる
 2. Tensorboardをつかうので，知らない人は調べる
@@ -19,6 +19,15 @@ The administers are YANO and NAKAMURA.
 8. (できる人だけ) Optunaなどのハイパーパラメータチューニングライブラリによる自動化
 
 
+しかし今回はOptunaに慣れておきたかったため、Optunaベースで上記課題を達成した．
+具体的には
+1. CIFAR-10とMNISTを落としてくる
+2. Optunaの使用を前提にそれぞれのCNNを組む
+3. 両データセットにおいて学習及びハイパラメータの最適化を行う．
+4. Tensorboardにてネットワークに関するハイパラメータがどのように結果に寄与するのか分析を行う
+5. 任意パラメータの入力により最適パラメータと最適ではない任意のパラメータを入力することで精度の比較を行う
+
+# Set up
 # Quick Start
 ## SSH接続(SSH接続でリモートPCへ接続する場合のみlocal terminalにて実行が必要)
 ```
@@ -27,7 +36,7 @@ The administers are YANO and NAKAMURA.
 接続完了後， 環境構築へ
 ## nativeの場合
 環境構築へ
-## 環境設定
+## 環境構築
 ### 初回
 任意のディレクトリにて， githubからリポジトリのクローンを作成する．
 ```
@@ -49,10 +58,9 @@ cd
 ```
 一時的に抜ける時は 「controll + P + Q」
 
-## Jupiter notebookを開く時
+### Jupiter notebookを開く時
 ```
-cd
 jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
 
-
+## 環境構築終了後は　src内のreadme 参照
