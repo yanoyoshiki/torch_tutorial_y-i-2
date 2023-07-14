@@ -13,6 +13,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from optuna.integration.tensorboard import TensorBoardCallback
 
+
 import optuna
 optuna.logging.disable_default_handler()
 
@@ -89,13 +90,16 @@ class Net(nn.Module):
 
 def train(model, device, train_loader, optimizer):
   model.train()
+  loss_corect = 0
   for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
         output = model(data)
         loss = F.nll_loss(output, target)
         loss.backward()
-        optimizer.step()
+        optimizer.step()  
+        loss_corect+=loss
+  return loss_corect / len(train_loader)
 
 def test(model, device, test_loader):
     model.eval()
@@ -140,6 +144,7 @@ def get_activation(trial):
     return activation
 
 def objective(trial):
+  # writer = SummaryWriter(log_dir=f"logs/CIFAR10/{datetime.datetime.now()}/learning/trial_{trial.number}/")
   EPOCH = 10
   device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -156,15 +161,17 @@ def objective(trial):
   optimizer = get_optimizer(trial, model)
 
   for step in range(EPOCH):
-    train(model, device, train_loader, optimizer)
+    loss=train(model, device, train_loader, optimizer)
     error_rate = test(model, device, test_loader)
+    # writer.add_scalar("loss", loss, step)  
+    # writer.add_scalar("accuracy", error_rate, step)  
     print(f'{step}fin | error rate {error_rate}')
 
   print(f'{trial.number} trial fin')
   return error_rate
 
 TRIAL_SIZE = 50
-tensorboard_callback = TensorBoardCallback(f"logs/CIFAR10/{datetime.datetime.now()}/", metric_name="error_rate")
+tensorboard_callback = TensorBoardCallback(f"logs/CIFAR10/{datetime.datetime.now()}/Optuna/", metric_name="error_rate")
 study = optuna.create_study()
 study.optimize(objective, n_trials=TRIAL_SIZE, callbacks=[tensorboard_callback])
 
