@@ -14,16 +14,14 @@ RUN apt-get update && \
         git \
         vim 
 
-
-
 # python libraries
-RUN pip install notebook \
-		matplotlib \
-		numpy \
-		scipy \
- 		gym \ 
-		tensorboard \
-		ipdb
+RUN pip3 install notebook==6.5.4 \
+                matplotlib==3.7.2 \
+                numpy==1.22.3 \
+                scipy==1.11.1 \
+                tensorboard==2.13.0 \
+                optuna==3.2.0 \
+                ipywidgets==8.0.7 \
+                pytorch_lightning==2.0.5 \
+                tensorflow==2.13.0
 
-
-RUN mkdir src
