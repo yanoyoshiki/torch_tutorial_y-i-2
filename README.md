@@ -51,16 +51,11 @@ bash build.sh
 bash run.sh
 cd
 ```
-### 2回目以降
-以下のコマンドで，dockerのコンテナへの接続を行う．
-```
-docker exec -it torch_tutorial_y-i　bash
-cd
-```
-一時的に抜ける時は 「controll + P + Q」
 
-## Jupiter notebookを開くコマンド
+## Jupiter notebook
 ```
 cd
 jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
+
+Jupyter notebookが開くことを確認出来次第, 本リポジトリ内の src/REAME.md に書いてある手順に従う. 
