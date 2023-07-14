@@ -1,8 +1,4 @@
 #Author
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5783b88335c72a3539fc02ed480326d9b6e99c68
 Yoshiki Yano
 
 ## CNNによる訓練とOptunaによるハイパラメータ最適化
@@ -40,13 +36,3 @@ python Optuna_CIFAR10_direct.py --patch_size 4 --EPOCH 10 --num_layer 4 --mid_un
 tensorboard --logdir /root/src/logs/MNIST/<実行した時刻>/learning --host 0.0.0.0 --port 6006
 tensorboard --logdir /root/src/logs/CIFAR10/<実行した時刻>/learning --host 0.0.0.0 --port 6006
 ```
-## 結果
-結果として最適パラメータでの学習結果と任意の非最適なハイパーパラメータでの学習結果を以下に示す. 
-これによって変化させたパラメータが学習結果に対してどのように’寄与するのかを確認できる. 
-<<<<<<< HEAD
-=======
-Yoshiki Yano
->>>>>>> 9b733a07d74e89d966d06414d71d5464e39dd22c
-=======
-
->>>>>>> 5783b88335c72a3539fc02ed480326d9b6e99c68
