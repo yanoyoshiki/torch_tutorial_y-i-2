@@ -14,6 +14,7 @@ RUN apt-get update && \
         git \
         vim 
 
+
 # python libraries
 RUN pip3 install notebook==6.5.4 \
                 matplotlib==3.7.2 \
