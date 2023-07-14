@@ -2,7 +2,6 @@
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-import ipdb
 import torch
 import torchvision
 import torchvision.transforms as transforms
