@@ -1,4 +1,5 @@
 #Author
+<<<<<<< HEAD
 Yoshiki Yano
 
 ## CNNによる訓練とOptunaによるハイパラメータ最適化
@@ -39,3 +40,6 @@ tensorboard --logdir /root/src/logs/CIFAR10/<実行した時刻>/learning --host
 ## 結果
 結果として最適パラメータでの学習結果と任意の非最適なハイパーパラメータでの学習結果を以下に示す. 
 これによって変化させたパラメータが学習結果に対してどのように’寄与するのかを確認できる. 
+=======
+Yoshiki Yano
+>>>>>>> 9b733a07d74e89d966d06414d71d5464e39dd22c
