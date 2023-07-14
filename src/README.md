@@ -33,6 +33,6 @@ python Optuna_CIFAR10_direct.py --patch_size 4 --EPOCH 10 --num_layer 4 --mid_un
 また上記学習結果はtensorboardにて可視化できるようになっているためそのtensorboard実行コマンドも以下に示す. 
 
 ```
-tensorboard --logdir /root/src/logs/MNIST/<実行した時刻>/learning --host 0.0.0.0 --port 6006
-tensorboard --logdir /root/src/logs/CIFAR10/<実行した時刻>/learning --host 0.0.0.0 --port 6006
+tensorboard --logdir /root/src/logs/MNIST/<実行した日時>/learning --host 0.0.0.0 --port 6006
+tensorboard --logdir /root/src/logs/CIFAR10/<実行した日時>/learning --host 0.0.0.0 --port 6006
 ```
