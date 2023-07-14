@@ -155,7 +155,7 @@ def directset_get_activation(activation_name):
 # retrain using hyperparameter derection on terminal
 def directset_hyperparameter(num_layer, mid_units, num_filters,activation_name,optimizer_name,weight_decay,adam_lr,momentum_sgd_lr,EPOCH):
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    writer = SummaryWriter(log_dir=f"logs/SIFAR10/{datetime.datetime.now()}/learning/")
+    writer = SummaryWriter(log_dir=f"logs/CIFAR10/{datetime.datetime.now()}/learning/")
     
     activation = directset_get_activation(activation_name)
     model = Net(num_layer, mid_units, num_filters,activation).to(device)
