@@ -1,4 +1,4 @@
-# torch_tutorial_y_-2
+# torch_tutorial_y_i-2
 The repository for M1 tutorial. 
 
 The administers are YANO and NAKAMURA. 
@@ -28,6 +28,7 @@ The administers are YANO and NAKAMURA.
 5. 任意パラメータの入力により最適パラメータと最適ではない任意のパラメータを入力することで精度の比較を行う
 
 # Set up
+# Quick Start
 ## SSH接続(SSH接続でリモートPCへ接続する場合のみlocal terminalにて実行が必要)
 ```
  ssh -L 63322:localhost:63322 -L 6006:localhost:6006 -L 6007:localhost:6007  <username>@<remotePC IP>
@@ -47,11 +48,13 @@ cd torch_tutorial_y-i-3/docker
 
 bash build.sh
 bash run.sh
+cd
 ```
 ### 2回目以降
 以下のコマンドで，dockerのコンテナへの接続を行う．
 ```
 docker exec -it torch_tutorial_y-i　bash
+cd
 ```
 一時的に抜ける時は 「controll + P + Q」
 
@@ -61,4 +64,3 @@ jupyter-notebook --ip 0.0.0.0 --port 63322 --allow-root
 ```
 
 ## 環境構築終了後は　src内のreadme 参照
-
